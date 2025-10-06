@@ -1,0 +1,16 @@
+[Unit]
+Description=Cross-Chain Swap Bot
+After=network.target
+
+[Service]
+Type=simple
+User=swapbot
+Group=swapbot
+WorkingDirectory=/opt/swap-bot
+Environment=PATH=/opt/swap-bot/venv/bin
+ExecStart=/opt/swap-bot/venv/bin/python run_bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

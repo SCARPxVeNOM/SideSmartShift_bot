@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  swap-bot:
+    build: .
+    container_name: cross-chain-swap-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=8212859489:AAFoxOz6XPo6LC929jV6BK9b_EpZa8bfooU
+      - SIDESHIFT_SECRET=a737abacea8b7a78e3aa0ef0f85acd8d
+      - SIDESHIFT_AFFILIATE_ID=ouG3iiiisS
+      - COMMISSION_RATE=0.005
+      - DATABASE_PATH=/app/data/swap_bot.db
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - bot-network
+
+  # Optional: Add monitoring with Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - bot-network
+    profiles:
+      - monitoring
+
+  # Optional: Add Grafana for dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - bot-network
+    profiles:
+      - monitoring
+
+networks:
+  bot-network:
+    driver: bridge
+
+volumes:
+  grafana-storage:

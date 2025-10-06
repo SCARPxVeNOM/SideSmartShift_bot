@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: swap-bot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python run_bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        value: 8212859489:AAFoxOz6XPo6LC929jV6BK9b_EpZa8bfooU
+      - key: SIDESHIFT_SECRET
+        value: a737abacea8b7a78e3aa0ef0f85acd8d
+      - key: SIDESHIFT_AFFILIATE_ID
+        value: ouG3iiiisS
+      - key: COMMISSION_RATE
+        value: 0.005
