@@ -1,4 +1,5 @@
-# 🔄 Cross-Chain Swap Bot for Telegram
+#SideSmartShift_Bot
+ 🔄 Cross-Chain Swap Bot for Telegram
 
 A powerful Telegram bot that enables users to perform cross-chain cryptocurrency swaps directly through Telegram using the SideShift.ai API. The bot supports both fixed-rate and variable-rate swaps across multiple blockchains.
 
