@@ -1,260 +1,285 @@
-# Cross-Chain Swap Bot for Telegram
+# 🔄 Cross-Chain Swap Bot for Telegram
 
-A comprehensive Telegram bot for cross-chain cryptocurrency swapping using the SideShift.ai API. This bot allows users to exchange cryptocurrencies across different blockchains directly through Telegram with support for both fixed and variable rate swaps.
+A powerful Telegram bot that enables users to perform cross-chain cryptocurrency swaps directly through Telegram using the SideShift.ai API. The bot supports both fixed-rate and variable-rate swaps across multiple blockchains.
 
-## Features
+## ✨ Features
 
-### Core Functionality
-- 🔄 **Cross-chain swaps** using SideShift.ai API
-- 🔒 **Fixed rate swaps** (15-minute rate guarantee)
-- 📊 **Variable rate swaps** (7-day validity)
-- 💰 **Commission earning** for bot operators
-- 📱 **User-friendly Telegram interface**
+- **🔄 Cross-Chain Swaps**: Swap cryptocurrencies across different blockchains
+- **🔒 Fixed Rate Swaps**: Lock in exchange rates for 15 minutes
+- **📊 Variable Rate Swaps**: Get market rates when deposit is received (7-day validity)
+- **📱 Telegram Integration**: Intuitive interface with inline keyboards
+- **📊 Real-time Monitoring**: Track swap status and receive updates
+- **📈 Price Alerts**: Set up alerts for price changes (coming soon)
+- **📋 Swap History**: View your complete swap history
+- **📊 Statistics**: Track your trading statistics
+- **🛡️ Address Validation**: Basic crypto address validation
+- **💾 SQLite Database**: Persistent storage for users and swaps
 
-### Advanced Features
-- 📈 **Price monitoring** and alerts
-- 📊 **Swap history** and statistics
-- 🔔 **Real-time notifications** for status updates
-- 🛡️ **Address validation** and security checks
-- 💾 **SQLite database** for data persistence
-- 🔄 **Background monitoring** of active swaps
+## 🚀 Supported Blockchains
 
-### Supported Operations
-- Create and manage cryptocurrency swaps
-- Track swap status in real-time
-- View trading history and statistics
-- Set up price alerts
-- Monitor multiple blockchain networks
+The bot supports all cryptocurrencies and networks available on SideShift.ai, including:
 
-## Installation
+- **Bitcoin** (BTC) - Bitcoin, Lightning Network
+- **Ethereum** (ETH) - Ethereum, Polygon, BSC, Arbitrum, Optimism
+- **Litecoin** (LTC) - Litecoin
+- **Dogecoin** (DOGE) - Dogecoin
+- **And many more...**
 
-### Prerequisites
+## 📋 Prerequisites
+
 - Python 3.8 or higher
-- Telegram Bot Token (from @BotFather)
-- SideShift.ai account and API credentials
+- Telegram Bot Token (from [@BotFather](https://t.me/botfather))
+- SideShift.ai API credentials
+- Git (for deployment)
 
-### Setup
+## 🛠️ Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd teleswap
-   ```
+### 1. Clone the Repository
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configure environment variables**
-   ```bash
-   cp env.example .env
-   ```
-   
-   Edit `.env` with your credentials:
-   ```env
-   # Telegram Bot Configuration
-   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-   
-   # SideShift.ai API Configuration
-   SIDESHIFT_SECRET=your_sideshift_secret_here
-   SIDESHIFT_AFFILIATE_ID=your_affiliate_id_here
-   
-   # Optional Configuration
-   COMMISSION_RATE=0.005
-   DATABASE_PATH=swap_bot.db
-   MONITOR_INTERVAL=60
-   TRACK_INTERVAL=300
-   ```
-
-4. **Get API credentials**
-   - Create a Telegram bot via [@BotFather](https://t.me/BotFather)
-   - Sign up at [SideShift.ai](https://sideshift.ai/account)
-   - Copy your Private Key and Affiliate ID
-
-## Usage
-
-### Starting the Bot
 ```bash
+git clone https://github.com/yourusername/teleswap.git
+cd teleswap
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the project root:
+
+```env
+# Production Configuration
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+SIDESHIFT_SECRET=your_sideshift_secret_here
+SIDESHIFT_AFFILIATE_ID=your_affiliate_id_here
+COMMISSION_RATE=0.005
+DATABASE_PATH=swap_bot.db
+LOG_LEVEL=INFO
+MONITOR_INTERVAL=60
+TRACK_INTERVAL=300
+HEALTH_CHECK_INTERVAL=300
+MAX_SWAP_AMOUNT=10000.0
+MIN_SWAP_AMOUNT=0.001
+ADDRESS_VALIDATION_ENABLED=true
+```
+
+### 4. Get API Credentials
+
+#### Telegram Bot Token
+1. Message [@BotFather](https://t.me/botfather) on Telegram
+2. Use `/newbot` command
+3. Follow the instructions to create your bot
+4. Copy the bot token to your `.env` file
+
+#### SideShift.ai Credentials
+1. Visit [SideShift.ai](https://sideshift.ai)
+2. Create an account and get your API credentials
+3. Add your secret and affiliate ID to the `.env` file
+
+## 🚀 Running the Bot
+
+### Local Development
+
+```bash
+# Run the simplified version (recommended)
+python run_bot.py
+
+# Or run the full application with monitoring
 python main.py
 ```
 
-### Bot Commands
+### Production Deployment
+
+#### Option 1: Render (Free Tier)
+1. Push your code to GitHub
+2. Connect your repository to [Render](https://render.com)
+3. Create a new Web Service
+4. Set environment variables in Render dashboard
+5. Deploy!
+
+#### Option 2: Heroku
+```bash
+# Install Heroku CLI
+# Create Procfile
+echo "worker: python run_bot.py" > Procfile
+
+# Deploy
+git add .
+git commit -m "Deploy to Heroku"
+git push heroku main
+```
+
+#### Option 3: VPS/Cloud Server
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run as a service
+nohup python run_bot.py > bot.log 2>&1 &
+```
+
+## 📱 Bot Commands
 
 | Command | Description |
 |---------|-------------|
 | `/start` | Welcome message and main menu |
-| `/swap` | Start a new cryptocurrency swap |
+| `/swap` | Start a new cross-chain swap |
 | `/status` | Check current swap status |
-| `/history` | View swap history |
+| `/history` | View your swap history |
 | `/rates` | Check exchange rates |
 | `/alerts` | Manage price alerts |
-| `/stats` | View trading statistics |
-| `/help` | Show help information |
+| `/stats` | View your trading statistics |
 | `/cancel` | Cancel current operation |
+| `/help` | Show help information |
 
-### Swap Process
+## 🔄 How to Use
 
-1. **Choose swap type**: Fixed rate (15 min) or Variable rate (7 days)
-2. **Select source coin**: Choose the cryptocurrency to swap from
-3. **Select source network**: Choose the blockchain network
-4. **Select destination coin**: Choose the cryptocurrency to receive
-5. **Select destination network**: Choose the target blockchain
-6. **Enter amount** (fixed rate only): Specify the exact amount to swap
-7. **Provide addresses**: Enter destination and optional refund addresses
-8. **Confirm and send**: Receive deposit address and transaction details
+### 1. Start a Swap
+1. Send `/swap` to the bot
+2. Choose between **Fixed Rate** or **Variable Rate**
+3. Enter the coin symbol you want to swap FROM (e.g., `BTC`)
+4. Select the network for the deposit coin
+5. Enter the coin symbol you want to receive (e.g., `ETH`)
+6. Select the network for the settlement coin
+7. Enter the amount to swap (for fixed rate) or destination address (for variable rate)
+8. Provide your destination address
+9. Optionally provide a refund address
+10. Confirm the swap details
 
-## Architecture
+### 2. Fixed vs Variable Rate
 
-### Core Components
+**Fixed Rate:**
+- Rate is locked for 15 minutes
+- You know exactly what you'll receive
+- Must send exact amount within time limit
+- Best for: Predictable swaps
 
-- **`main.py`**: Application entry point and orchestration
-- **`swap_bot.py`**: Main Telegram bot logic and command handlers
-- **`sideshift_api.py`**: SideShift.ai API wrapper
-- **`database.py`**: SQLite database operations
-- **`monitor.py`**: Background monitoring and notifications
+**Variable Rate:**
+- Rate determined when deposit is received
+- Valid for 7 days
+- Can send any amount within min/max limits
+- Best for: Flexible timing
 
-### Database Schema
+### 3. Track Your Swap
+- Use `/status` to check current swap status
+- Visit the SideShift.ai tracking URL provided
+- Receive automatic updates when status changes
 
-- **`users`**: User information and statistics
-- **`swaps`**: Swap transaction records
-- **`price_alerts`**: User-configured price alerts
-- **`user_sessions`**: Temporary user session state
-- **`rate_history`**: Historical price data
+## 🏗️ Project Structure
 
-## Configuration
+```
+teleswap/
+├── main.py                 # Main application entry point
+├── run_bot.py             # Simplified bot runner
+├── swap_bot.py            # Telegram bot logic
+├── sideshift_api.py       # SideShift.ai API wrapper
+├── database.py            # Database operations
+├── monitor.py             # Background monitoring
+├── config.py              # Configuration management
+├── utils.py               # Utility functions
+├── test_bot.py            # Bot testing script
+├── requirements.txt       # Python dependencies
+├── .env                   # Environment variables
+├── .gitignore            # Git ignore rules
+├── README.md             # This file
+└── swap_bot.db           # SQLite database (created on first run)
+```
 
-### Environment Variables
+## 🔧 Configuration Options
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `TELEGRAM_BOT_TOKEN` | Telegram bot token | Required |
-| `SIDESHIFT_SECRET` | SideShift API secret | Required |
-| `SIDESHIFT_AFFILIATE_ID` | SideShift affiliate ID | Required |
-| `COMMISSION_RATE` | Commission rate (0.0-0.02) | 0.005 |
-| `DATABASE_PATH` | SQLite database path | swap_bot.db |
+| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token | Required |
+| `SIDESHIFT_SECRET` | SideShift.ai API secret | Required |
+| `SIDESHIFT_AFFILIATE_ID` | Your affiliate ID | Required |
+| `COMMISSION_RATE` | Commission rate (0.005 = 0.5%) | 0.005 |
+| `DATABASE_PATH` | SQLite database file path | swap_bot.db |
+| `LOG_LEVEL` | Logging level (DEBUG, INFO, WARNING, ERROR) | INFO |
 | `MONITOR_INTERVAL` | Swap monitoring interval (seconds) | 60 |
 | `TRACK_INTERVAL` | Price tracking interval (seconds) | 300 |
+| `HEALTH_CHECK_INTERVAL` | Health check interval (seconds) | 300 |
+| `MAX_SWAP_AMOUNT` | Maximum swap amount | 10000.0 |
+| `MIN_SWAP_AMOUNT` | Minimum swap amount | 0.001 |
+| `ADDRESS_VALIDATION_ENABLED` | Enable address validation | true |
 
-### Commission Structure
+## 🛡️ Security Features
 
-The bot supports commission earning through SideShift.ai:
-- Default commission: 0.5%
-- Configurable range: 0% to 2%
-- Commission embedded in exchange rates
-- Automatic payout based on thresholds
+- **Environment Variables**: All sensitive data stored in `.env` file
+- **Address Validation**: Basic crypto address format validation
+- **Input Sanitization**: All user inputs are validated
+- **Error Handling**: Comprehensive error handling and logging
+- **Rate Limiting**: Built-in rate limiting for API calls
 
-## Security Considerations
+## 📊 Database Schema
 
-### Production Deployment
+The bot uses SQLite with the following tables:
 
-1. **IP Address Handling**: Implement proper user IP detection
-2. **Address Validation**: Add comprehensive crypto address validation
-3. **Rate Limiting**: Implement API rate limiting (5 shifts/min, 20 quotes/min)
-4. **Error Handling**: Add robust error handling and logging
-5. **Data Encryption**: Encrypt sensitive data in database
+- **users**: User information and preferences
+- **swaps**: Swap history and status
+- **price_alerts**: Price alert configurations
+- **user_sessions**: Temporary user session data
 
-### Security Best Practices
-
-- Keep API credentials secure
-- Validate all user inputs
-- Implement transaction limits
-- Monitor for suspicious activity
-- Regular security audits
-
-## Monitoring and Maintenance
-
-### Background Tasks
-
-- **Swap Monitoring**: Checks active swap statuses every minute
-- **Price Tracking**: Monitors price changes for alerts
-- **Health Checks**: System health monitoring every 5 minutes
-- **Database Cleanup**: Automatic cleanup of old data
-
-### Logging
-
-- Application logs: `swap_bot.log`
-- Error tracking and debugging
-- Performance monitoring
-- User activity logging
-
-## API Integration
-
-### SideShift.ai API Features
-
-- Fixed and variable rate swaps
-- Real-time exchange rates
-- Multi-network support
-- Commission management
-- Status tracking
-- Refund handling
-
-### Supported Networks
-
-- Bitcoin (BTC)
-- Ethereum (ETH)
-- Arbitrum
-- Polygon
-- BSC (Binance Smart Chain)
-- And many more...
-
-## Development
-
-### Project Structure
-```
-teleswap/
-├── main.py                 # Application entry point
-├── swap_bot.py            # Telegram bot implementation
-├── sideshift_api.py       # SideShift API wrapper
-├── database.py            # Database operations
-├── monitor.py             # Background monitoring
-├── requirements.txt       # Python dependencies
-├── env.example           # Environment variables template
-├── README.md             # This file
-└── swap_bot.log          # Application logs
-```
-
-### Adding New Features
-
-1. **New Commands**: Add handlers in `swap_bot.py`
-2. **API Endpoints**: Extend `sideshift_api.py`
-3. **Database Changes**: Update schema in `database.py`
-4. **Monitoring**: Add tasks in `monitor.py`
-
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Bot not responding**: Check token and network connection
-2. **API errors**: Verify SideShift credentials
-3. **Database errors**: Check file permissions and disk space
-4. **Swap failures**: Verify addresses and amounts
+1. **Bot not responding**
+   - Check if the bot token is correct
+   - Ensure the bot is running and not conflicting with other instances
+   - Check logs for error messages
 
-### Debug Mode
+2. **Swap creation fails**
+   - Verify SideShift.ai API credentials
+   - Check if the coin pair is supported
+   - Ensure addresses are valid
 
-Enable debug logging:
-```bash
-export LOG_LEVEL=DEBUG
-python main.py
-```
+3. **Database errors**
+   - Check file permissions for the database file
+   - Ensure the database directory exists
 
-## Support
+### Logs
 
-- **SideShift.ai Support**: help@sideshift.ai
-- **Telegram Support**: Contact bot operator
-- **Documentation**: SideShift.ai API docs
-- **Issues**: Report via GitHub issues
+Check the log files for detailed error information:
+- `swap_bot.log` - Main application logs
+- Console output for real-time debugging
 
-## License
+## 🤝 Contributing
 
-This project is for educational and commercial use. Please ensure compliance with local regulations regarding cryptocurrency trading and bot operations.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Disclaimer
+## 📄 License
 
-This bot is provided as-is. Users are responsible for:
-- Verifying all transaction details
-- Understanding cryptocurrency risks
-- Complying with local regulations
-- Securing their private keys and addresses
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-The bot operators are not responsible for any financial losses or technical issues.
+## ⚠️ Disclaimer
+
+This bot is for educational and personal use. Cryptocurrency trading involves risk. Always:
+
+- Double-check addresses before sending funds
+- Verify swap details before confirming
+- Keep your API credentials secure
+- Test with small amounts first
+
+## 🆘 Support
+
+- **Issues**: [GitHub Issues](https://github.com/yourusername/teleswap/issues)
+- **SideShift.ai Support**: [help@sideshift.ai](mailto:help@sideshift.ai)
+- **Telegram**: Contact the bot owner
+
+## 🙏 Acknowledgments
+
+- [SideShift.ai](https://sideshift.ai) for the excellent API
+- [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) for the Telegram library
+- The open-source community for inspiration and tools
+
+---
+
+**Made with ❤️ for the crypto community**

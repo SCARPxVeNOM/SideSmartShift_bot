@@ -83,18 +83,27 @@ class SwapBotApplication:
     
     def _load_config(self) -> dict:
         """Load configuration from environment variables"""
-        # Hardcoded credentials
         config = {
-            'TELEGRAM_BOT_TOKEN': '8212859489:AAFoxOz6XPo6LC929jV6BK9b_EpZa8bfooU',
-            'SIDESHIFT_SECRET': 'a737abacea8b7a78e3aa0ef0f85acd8d',
-            'SIDESHIFT_AFFILIATE_ID': 'ouG3iiiisS',
+            'TELEGRAM_BOT_TOKEN': os.getenv('TELEGRAM_BOT_TOKEN'),
+            'SIDESHIFT_SECRET': os.getenv('SIDESHIFT_SECRET'),
+            'SIDESHIFT_AFFILIATE_ID': os.getenv('SIDESHIFT_AFFILIATE_ID'),
             'COMMISSION_RATE': float(os.getenv('COMMISSION_RATE', '0.005')),
             'DATABASE_PATH': os.getenv('DATABASE_PATH', 'swap_bot.db'),
             'MONITOR_INTERVAL': int(os.getenv('MONITOR_INTERVAL', '60')),
             'TRACK_INTERVAL': int(os.getenv('TRACK_INTERVAL', '300')),
             'HEALTH_CHECK_INTERVAL': int(os.getenv('HEALTH_CHECK_INTERVAL', '300')),
-            'LOG_LEVEL': os.getenv('LOG_LEVEL', 'INFO')
+            'LOG_LEVEL': os.getenv('LOG_LEVEL', 'INFO'),
+            'MAX_SWAP_AMOUNT': float(os.getenv('MAX_SWAP_AMOUNT', '10000.0')),
+            'MIN_SWAP_AMOUNT': float(os.getenv('MIN_SWAP_AMOUNT', '0.001')),
+            'ADDRESS_VALIDATION_ENABLED': os.getenv('ADDRESS_VALIDATION_ENABLED', 'true').lower() == 'true'
         }
+        
+        # Validate required environment variables
+        required_vars = ['TELEGRAM_BOT_TOKEN', 'SIDESHIFT_SECRET', 'SIDESHIFT_AFFILIATE_ID']
+        missing_vars = [var for var in required_vars if not config[var]]
+        
+        if missing_vars:
+            raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
         
         return config
     

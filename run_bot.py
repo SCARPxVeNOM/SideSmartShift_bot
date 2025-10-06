@@ -22,12 +22,20 @@ logger = logging.getLogger(__name__)
 async def main():
     """Main entry point"""
     try:
-        # Hardcoded credentials
-        TELEGRAM_TOKEN = "8212859489:AAFoxOz6XPo6LC929jV6BK9b_EpZa8bfooU"
-        SIDESHIFT_SECRET = "a737abacea8b7a78e3aa0ef0f85acd8d"
-        SIDESHIFT_AFFILIATE_ID = "ouG3iiiisS"
-        COMMISSION_RATE = 0.005
-        DATABASE_PATH = "swap_bot.db"
+        # Load environment variables
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        # Get credentials from environment
+        TELEGRAM_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+        SIDESHIFT_SECRET = os.getenv('SIDESHIFT_SECRET')
+        SIDESHIFT_AFFILIATE_ID = os.getenv('SIDESHIFT_AFFILIATE_ID')
+        COMMISSION_RATE = float(os.getenv('COMMISSION_RATE', '0.005'))
+        DATABASE_PATH = os.getenv('DATABASE_PATH', 'swap_bot.db')
+        
+        # Validate required environment variables
+        if not all([TELEGRAM_TOKEN, SIDESHIFT_SECRET, SIDESHIFT_AFFILIATE_ID]):
+            raise ValueError("Missing required environment variables. Please check your .env file.")
         
         logger.info("Initializing Cross-Chain Swap Bot...")
         
@@ -68,21 +76,9 @@ async def main():
         
         logger.info("Bot initialized successfully. Starting polling...")
         
-        # Start the bot
-        await application.initialize()
-        await application.start()
-        await application.updater.start_polling()
-        
-        # Keep running
-        try:
-            while True:
-                await asyncio.sleep(1)
-        except KeyboardInterrupt:
-            logger.info("Received keyboard interrupt")
-        finally:
-            await application.updater.stop()
-            await application.stop()
-            await application.shutdown()
+        # Start the bot using run_polling (recommended for v20+)
+        logger.info("Bot initialized successfully. Starting polling...")
+        await application.run_polling()
         
     except Exception as e:
         logger.error(f"Error running bot: {e}")
